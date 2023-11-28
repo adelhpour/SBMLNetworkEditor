@@ -94,7 +94,7 @@ class SBMLNetworkEditor:
         self.write_sbml(file_name)
         sbml_graph_info = netranslator.NetworkInfoImportFromSBMLModel()
         sbml_graph_info.extract_info(file_name)
-        sbml_export = NetworkInfoExportToMatPlotLib()
+        sbml_export = netranslator.NetworkInfoExportToMatPlotLib()
         sbml_export.extract_graph_info(sbml_graph_info)
         sbml_export.export(file_name)
 
