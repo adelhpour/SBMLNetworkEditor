@@ -18,9 +18,9 @@ class SBMLNetworkEditor:
         """
 
         self.sbml_object = None
-        self.read_sbml(sbml)
+        self.load(sbml)
 
-    def read_sbml(self, sbml):
+    def load(self, sbml):
 
         """
         Reads an SBML document from the given file name or the given text string
@@ -39,7 +39,7 @@ class SBMLNetworkEditor:
         self.sbml_object = sbmlne.readSBML(sbml)
         return self.sbml_object
 
-    def write_sbml(self, file_name=""):
+    def export(self, file_name=""):
         """
         Writes the given SBML document to either the file_name or a string
 
@@ -67,7 +67,7 @@ class SBMLNetworkEditor:
             text: the SBML text string on success and empty string if one of the underlying parser components fail.
         """
 
-        return self.write_sbml()
+        return self.export()
 
     def autolayout(self, stiffness=10.0, gravity=15.0, use_magnetism=False, use_boundary=False, use_grid=False):
         """
@@ -90,8 +90,8 @@ class SBMLNetworkEditor:
 
         return sbmlne.autolayout(self.sbml_object, stiffness, gravity, use_magnetism, use_boundary, use_grid)
 
-    def export(self, file_name):
-        self.write_sbml(file_name)
+    def draw(self, file_name):
+        self.export(file_name)
         sbml_graph_info = netranslator.NetworkInfoImportFromSBMLModel()
         sbml_graph_info.extract_info(file_name)
         sbml_export = netranslator.NetworkInfoExportToMatPlotLib()
