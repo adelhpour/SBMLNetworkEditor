@@ -1,15 +1,14 @@
 from setuptools import setup
 from setuptools import find_packages
 
-MAJOR = 0
-MINOR = 0
-MICRO = 9
-
-version = f'{MAJOR}.{MINOR}.{MICRO}'
-
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-
+    
+with open("VERSION.txt", "r") as f:
+    version = f.read().rstrip()
+    
+with open("requirements.txt", "r") as f:
+    requirements = f.readlines()
 setup(
     name="sbmlnetworkeditor",
     version=version,
@@ -27,7 +26,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["libsbmlnetworkeditor", "networkinfotranslator"],
+    install_requires=requirements,
     package_dir={"": "src"},
     packages=find_packages(where="src"),
     python_requires=">=3.8"
