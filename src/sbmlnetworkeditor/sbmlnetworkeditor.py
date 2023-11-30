@@ -58,17 +58,6 @@ class SBMLNetworkEditor:
         else:
             return sbmlne.writeSBML(self.sbml_object)
 
-    def get_sbml(self):
-        """
-        Writes the given SBML document to a string a returns it
-
-        :Returns:
-
-            text: the SBML text string on success and empty string if one of the underlying parser components fail.
-        """
-
-        return self.export()
-
     def autolayout(self, stiffness=10.0, gravity=15.0, use_magnetism=False, use_boundary=False, use_grid=False):
         """
         checks if a Layout object, a GlobalRenderInformation object, and LocalRenderInformation object does not exists in the SBMLDocument,
