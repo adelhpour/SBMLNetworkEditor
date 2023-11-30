@@ -1,5 +1,7 @@
 import libsbmlnetworkeditor as sbmlne
 import networkinfotranslator as netranslator
+from matplotlib import pyplot as plt
+from matplotlib import image as mpimg
 
 class SBMLNetworkEditor:
 
@@ -79,13 +81,38 @@ class SBMLNetworkEditor:
 
         return sbmlne.autolayout(self.sbml_object, stiffness, gravity, use_magnetism, use_boundary, use_grid)
 
-    def draw(self, file_name):
-        self.export(file_name)
+    def draw(self, file_directory="", file_name="", file_format=""):
+        """
+        create an image of the network using networkinfotranslator package, save it as file to the provided directory (or the current directory), and then load and display it
+
+        :Parameters:
+
+            - file_directory (string, optional): a string (default: "") that specifies the directory to which the output image will be saved.
+            - file_name (string, optional): a string (default: "") that specifies the name of the output image.
+            - file_format (string, optional): a sting (default: "") that specifies that format of the output image (examples are 'pdf', 'png', 'svg', and 'jpg')
+
+        """
+        if not self._layout_is_specified() or not self._render_is_specified():
+            self.autolayout()
+
         sbml_graph_info = netranslator.NetworkInfoImportFromSBMLModel()
-        sbml_graph_info.extract_info(file_name)
+        sbml_graph_info.extract_info(self.export())
         sbml_export = netranslator.NetworkInfoExportToMatPlotLib()
         sbml_export.extract_graph_info(sbml_graph_info)
-        sbml_export.export(file_name)
+        sbml_export.export(file_directory, file_name, file_format)
+        image = mpimg.imread(sbml_export.get_output_name(file_directory, file_name, file_format))
+        plt.imshow(image)
+        plt.axis('off')
+        plt.show()
 
+    def _layout_is_specified(self):
+        if sbmlne.getNumLayouts(self.sbml_object):
+            return True
 
+        return False
 
+    def _render_is_specified(self):
+        if sbmlne.getNumGlobalRenderInformation(self.sbml_object) or sbmlne.getNumLocalRenderInformation(self.sbml_object):
+            return True
+
+        return False
