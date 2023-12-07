@@ -81,7 +81,7 @@ class SBMLNetworkEditor:
 
         return sbmlne.autolayout(self.sbml_object, stiffness, gravity, use_magnetism, use_boundary, use_grid)
 
-    def draw(self, file_directory="", file_name="", file_format=""):
+    def draw(self, file_directory="", file_name="", file_format="", display=True):
         """
         create an image of the network using networkinfotranslator package, save it as file to the provided directory (or the current directory), and then load and display it
 
@@ -90,6 +90,7 @@ class SBMLNetworkEditor:
             - file_directory (string, optional): a string (default: "") that specifies the directory to which the output image will be saved.
             - file_name (string, optional): a string (default: "") that specifies the name of the output image.
             - file_format (string, optional): a sting (default: "") that specifies that format of the output image (examples are 'pdf', 'png', 'svg', and 'jpg')
+            - display (boolean, optional): a boolean (default: True) that determines whether to display the generated image or not
 
         """
         if not self._layout_is_specified() or not self._render_is_specified():
@@ -100,10 +101,11 @@ class SBMLNetworkEditor:
         sbml_export = netranslator.NetworkInfoExportToMatPlotLib()
         sbml_export.extract_graph_info(sbml_graph_info)
         sbml_export.export(file_directory, file_name, file_format)
-        image = mpimg.imread(sbml_export.get_output_name(file_directory, file_name, file_format))
-        plt.imshow(image)
-        plt.axis('off')
-        plt.show()
+        if display and file_format != "pdf":
+            image = mpimg.imread(sbml_export.get_output_name(file_directory, file_name, file_format))
+            plt.imshow(image)
+            plt.axis('off')
+            plt.show()
 
     def _layout_is_specified(self):
         if sbmlne.getNumLayouts(self.sbml_object):
