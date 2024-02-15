@@ -1,2 +1,4 @@
 libsbmlnetworkeditor
 networkinfotranslator
+pillow
+ipython
