@@ -1,4 +1,3 @@
 libsbmlnetworkeditor
 networkinfotranslator
-pillow
 ipython
