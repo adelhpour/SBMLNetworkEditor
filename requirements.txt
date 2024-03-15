@@ -1,3 +1,3 @@
-libsbmlnetworkeditor
-networkinfotranslator
-ipython
+libsbmlnetworkeditor==0.0.13
+networkinfotranslator==0.0.18
+ipython>=8.15.0
